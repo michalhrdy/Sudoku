@@ -33,6 +33,7 @@
             this.BtnLoad = new System.Windows.Forms.Button();
             this.BtnSave = new System.Windows.Forms.Button();
             this.BtnSolve = new System.Windows.Forms.Button();
+            this.BtnValidate = new System.Windows.Forms.Button();
             this.buttonLayout.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,7 +73,8 @@
             this.buttonLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.buttonLayout.Controls.Add(this.BtnLoad, 0, 0);
             this.buttonLayout.Controls.Add(this.BtnSave, 1, 0);
-            this.buttonLayout.Controls.Add(this.BtnSolve, 0, 1);
+            this.buttonLayout.Controls.Add(this.BtnSolve, 1, 1);
+            this.buttonLayout.Controls.Add(this.BtnValidate, 0, 1);
             this.buttonLayout.Location = new System.Drawing.Point(588, 12);
             this.buttonLayout.Name = "buttonLayout";
             this.buttonLayout.RowCount = 2;
@@ -103,13 +105,23 @@
             // 
             // BtnSolve
             // 
-            this.BtnSolve.Location = new System.Drawing.Point(3, 50);
+            this.BtnSolve.Location = new System.Drawing.Point(103, 50);
             this.BtnSolve.Name = "BtnSolve";
             this.BtnSolve.Size = new System.Drawing.Size(75, 23);
             this.BtnSolve.TabIndex = 2;
             this.BtnSolve.Text = "Solve";
             this.BtnSolve.UseVisualStyleBackColor = true;
             this.BtnSolve.Click += new System.EventHandler(this.BtnSolve_Click);
+            // 
+            // BtnValidate
+            // 
+            this.BtnValidate.Location = new System.Drawing.Point(3, 50);
+            this.BtnValidate.Name = "BtnValidate";
+            this.BtnValidate.Size = new System.Drawing.Size(75, 23);
+            this.BtnValidate.TabIndex = 3;
+            this.BtnValidate.Text = "Validate";
+            this.BtnValidate.UseVisualStyleBackColor = true;
+            this.BtnValidate.Click += new System.EventHandler(this.BtnValidate_Click);
             // 
             // SudokuForm
             // 
@@ -134,6 +146,7 @@
         private System.Windows.Forms.Button BtnLoad;
         private System.Windows.Forms.Button BtnSave;
         private System.Windows.Forms.Button BtnSolve;
+        private System.Windows.Forms.Button BtnValidate;
     }
 }
 

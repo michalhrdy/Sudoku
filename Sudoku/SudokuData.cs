@@ -9,8 +9,7 @@ namespace Sudoku
 {
     class SudokuData
     {
-        public int[,] NumberMatrix { get; private set; }
-
+        public int[,] NumberMatrix { get; set; }
         public SudokuData()
         {
             FillMatrix();
@@ -21,13 +20,13 @@ namespace Sudoku
             var stream = new StreamReader(fileName);
             int[,] tempMatrix = new int[Settings.matrixSize, Settings.matrixSize];
 
-            for (int i = 0; i < Settings.matrixSize; i++)
+            for (int i = 0; i < NumberMatrix.GetLength(0); i++)
             {
                 string[] line = stream.ReadLine().Split(',');
 
-                if (line.Length == Settings.matrixSize)
+                if (line.Length == NumberMatrix.GetLength(0))
                 {
-                    for (int j = 0; j < Settings.matrixSize; j++)
+                    for (int j = 0; j < NumberMatrix.GetLength(0); j++)
                     {
                         if (line[j].Length > 1)
                         {
@@ -48,12 +47,12 @@ namespace Sudoku
 
         public void SaveToFile(string fileName)
         {
-            string[] lines = new string[Settings.matrixSize];
+            string[] lines = new string[NumberMatrix.GetLength(0)];
 
-            for (int i = 0; i < Settings.matrixSize; i++)
+            for (int i = 0; i < NumberMatrix.GetLength(0); i++)
             {
                 string line = string.Empty;
-                for (int j = 0; j < Settings.matrixSize; j++)
+                for (int j = 0; j < NumberMatrix.GetLength(0); j++)
                 {
                     line = line + NumberMatrix[i, j].ToString() + Settings.delimiter;
                 }
@@ -65,13 +64,13 @@ namespace Sudoku
         }
 
         //Checks if values array contains duplicates
-        private bool CheckSubMatrix(int startRow, int startCol)
+        private bool CheckSubMatrix(int subSize, int startRow, int startCol)
         {
             int flag = 0;
 
-            for (int i = startRow; i < startRow+Settings.subMatrixSize; i++)
+            for (int i = startRow; i < startRow + subSize; i++)
             {
-                for (int j = startCol; j < startCol+Settings.subMatrixSize; j++)
+                for (int j = startCol; j < startCol + subSize; j++)
                 {
                     if (NumberMatrix[i, j] != 0)
                     {
@@ -89,11 +88,11 @@ namespace Sudoku
         public bool CheckSudokuDataValidity()
         {
             //Check rows
-            for (int i = 0; i < Settings.matrixSize; i++)
+            for (int i = 0; i < NumberMatrix.GetLength(0); i++)
             {
                 int flag = 0;
 
-                for (int j = 0; j < Settings.matrixSize; j++)
+                for (int j = 0; j < NumberMatrix.GetLength(0); j++)
                 {
                     if (NumberMatrix[i, j] != 0)
                     {
@@ -105,13 +104,12 @@ namespace Sudoku
             }
 
             //Check columns
-            for (int i = 0; i < Settings.matrixSize; i++)
+            for (int i = 0; i < NumberMatrix.GetLength(1); i++)
             {
                 int flag = 0;
 
-                for (int j = 0; j < Settings.matrixSize; j++)
+                for (int j = 0; j < NumberMatrix.GetLength(1); j++)
                 {
-                    
                     if (NumberMatrix[j, i] != 0)
                     {
                         int bit = 1 << NumberMatrix[j, i];
@@ -121,12 +119,13 @@ namespace Sudoku
                 }
             }
 
+            int subSize = (int)Math.Sqrt(NumberMatrix.GetLength(0));
             //Check sub-matrices
-            for (int i = 0; i < Settings.matrixSize; i += Settings.subMatrixSize)
+            for (int i = 0; i < NumberMatrix.GetLength(0); i += subSize)
             {
-                for (int j = 0; j < Settings.matrixSize; j += Settings.subMatrixSize)
+                for (int j = 0; j < NumberMatrix.GetLength(1); j += subSize)
                 {
-                    if (!CheckSubMatrix(i, j))
+                    if (!CheckSubMatrix(subSize, i, j))
                     {
                         return false;
                     }

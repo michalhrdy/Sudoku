@@ -12,7 +12,10 @@ namespace Sudoku
         public const int subMatrixSize = 3;
         public const char delimiter = ',';
 
-        public static int[,] defaultData = 
+        public const int minValue = 1;
+        public const int maxValue = Settings.matrixSize;
+
+        public static int[,] defaulSudokutData = 
         {
             { 6,0,7,1,4,3,8,2,0 },
             { 9,2,0,5,0,0,3,0,0 },

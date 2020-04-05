@@ -155,11 +155,31 @@ namespace Sudoku
 
             if (Data.CheckSudokuDataValidity())
             {
-                MessageBox.Show("OK");
+                Solver solver = new Solver();
+
+                Data.NumberMatrix = solver.RunSolve(Data.NumberMatrix);
+
+                DataToGrid();
+
+                MessageBox.Show("Solved");
             }
             else
             {
-                MessageBox.Show("NOT OK");
+                MessageBox.Show("Invalid input data. Check the table.");
+            }
+        }
+
+        private void BtnValidate_Click(object sender, EventArgs e)
+        {
+            GridToData();
+
+            if (Data.CheckSudokuDataValidity())
+            {
+                MessageBox.Show("Input is valid sudoku");
+            }
+            else
+            {
+                MessageBox.Show("Input is invalid");
             }
         }
     }
