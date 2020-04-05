@@ -48,24 +48,30 @@ namespace Sudoku
                 }
             }
 
-
-            if (foundEmpty)
-            {
-                for(int n = 1; n <= sudokuMatrix.GetLength(0); n++)
-                {
-                    if (IsUnique(sudokuMatrix, row, col, n))
-                    {
-                        sudokuMatrix[row, col] = n;
-                        Solve(sudokuMatrix);
-                    }
-                }
-
-
-            } else
+            //If there are no empty fields left copt the result
+            if (!foundEmpty)
             {
                 this.sudokuMatrixCopy = sudokuMatrix;
                 return true;
             }
+
+            for (int n = 1; n <= sudokuMatrix.GetLength(0); n++)
+            {
+                if (IsUnique(sudokuMatrix, row, col, n))
+                {
+                    sudokuMatrix[row, col] = n;
+
+                    if (Solve(sudokuMatrix))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        sudokuMatrix[row, col] = 0;
+                    }
+                }
+            }
+            return false;
         }
 
         private bool IsUnique(int[,] sudokuMatrix,int row, int col, int num)
