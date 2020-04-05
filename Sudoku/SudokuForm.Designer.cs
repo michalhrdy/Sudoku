@@ -118,6 +118,8 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.buttonLayout);
             this.Controls.Add(this.sudokuTable);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "SudokuForm";
             this.Text = "Sudoku";
             this.buttonLayout.ResumeLayout(false);

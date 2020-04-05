@@ -69,9 +69,9 @@ namespace Sudoku
         {
             int flag = 0;
 
-            for (int i = startRow; i < Settings.subMatrixSize; i++)
+            for (int i = startRow; i < startRow+Settings.subMatrixSize; i++)
             {
-                for (int j = startCol; j < Settings.subMatrixSize; j++)
+                for (int j = startCol; j < startCol+Settings.subMatrixSize; j++)
                 {
                     if (NumberMatrix[i, j] != 0)
                     {
@@ -138,16 +138,16 @@ namespace Sudoku
 
         private void FillMatrix()
         {
-            NumberMatrix = Settings.defaultData;
+            //NumberMatrix = Settings.defaultData;
 
-
-            //for (int i = 0; i < NumberMatrix.GetLength(0); i++)
-            //{
-            //    for (int j = 0; j < NumberMatrix.GetLength(1); j++)
-            //    {
-            //        NumberMatrix[i, j] = 0;
-            //    }
-            //}
+            NumberMatrix = new int[Settings.matrixSize,Settings.matrixSize];
+            for (int i = 0; i < NumberMatrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < NumberMatrix.GetLength(1); j++)
+                {
+                    NumberMatrix[i, j] = 0;
+                }
+            }
         }
     }
 }
