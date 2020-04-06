@@ -8,15 +8,16 @@ namespace Sudoku
 {
     class Solver
     {
+        //Stores a copy of data to work with
         private int[,] sudokuMatrixCopy;
         public Solver()
         {
 
         }
 
+        //Makes a copy of input data and runs Solve()
         public int[,] RunSolve(int[,] sudokuMatrix)
         {
-            //Store a copy of data to work with
             this.sudokuMatrixCopy = sudokuMatrix;
 
             Solve(sudokuMatrixCopy);
@@ -24,12 +25,14 @@ namespace Sudoku
             return sudokuMatrixCopy;
         }
 
+        //Solves the Sudoku and stores result in sudokuMatrixCopy
         private bool Solve(int[,] sudokuMatrix)
         {
             int row = 0;
             int col = 0;
             bool foundEmpty = false;
 
+            //Find an empty cell
             for (int i = 0; i < sudokuMatrix.GetLength(0); i++)
             {
                 for (int j = 0; j < sudokuMatrix.GetLength(1); j++)
@@ -55,8 +58,11 @@ namespace Sudoku
                 return true;
             }
 
+            //Try to find viable number to fit in an empty cell
             for (int n = 1; n <= sudokuMatrix.GetLength(0); n++)
             {
+                //If number is unique in column, row and submatrix
+                //place it in an empty spot and call Solve recursively
                 if (IsUnique(sudokuMatrix, row, col, n))
                 {
                     sudokuMatrix[row, col] = n;
@@ -74,6 +80,7 @@ namespace Sudoku
             return false;
         }
 
+        //Checks if the number is unique in row, column and sub-matrix
         private bool IsUnique(int[,] sudokuMatrix,int row, int col, int num)
         {
             //Check uniqueness in column
@@ -94,6 +101,7 @@ namespace Sudoku
                 }
             }
 
+            //Calculate Sub-Matrix offset
             int squareRoot = (int)Math.Sqrt(sudokuMatrix.GetLength(0));
             int subMatrixRowOffset = row - row % squareRoot;
             int subMatrixColOffset = col - col % squareRoot;

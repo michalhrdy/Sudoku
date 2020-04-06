@@ -63,27 +63,6 @@ namespace Sudoku
             System.IO.File.WriteAllLines(fileName, lines);
         }
 
-        //Checks if values array contains duplicates
-        private bool CheckSubMatrix(int subSize, int startRow, int startCol)
-        {
-            int flag = 0;
-
-            for (int i = startRow; i < startRow + subSize; i++)
-            {
-                for (int j = startCol; j < startCol + subSize; j++)
-                {
-                    if (NumberMatrix[i, j] != 0)
-                    {
-                        int bit = 1 << NumberMatrix[i, j];
-                        if ((flag & bit) != 0) return false;
-                        flag |= bit;
-                    }
-                }
-            }
-
-            return true;
-        }
-
         //Checks if data contains a valid sudoku
         public bool CheckSudokuDataValidity()
         {
@@ -128,6 +107,27 @@ namespace Sudoku
                     if (!CheckSubMatrix(subSize, i, j))
                     {
                         return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        //Sub-matrix checking method called from CheckSudokuDataValidity()
+        private bool CheckSubMatrix(int subSize, int startRow, int startCol)
+        {
+            int flag = 0;
+
+            for (int i = startRow; i < startRow + subSize; i++)
+            {
+                for (int j = startCol; j < startCol + subSize; j++)
+                {
+                    if (NumberMatrix[i, j] != 0)
+                    {
+                        int bit = 1 << NumberMatrix[i, j];
+                        if ((flag & bit) != 0) return false;
+                        flag |= bit;
                     }
                 }
             }

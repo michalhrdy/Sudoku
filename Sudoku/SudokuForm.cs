@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,7 +15,19 @@ namespace Sudoku
 {
     public partial class SudokuForm : Form
     {
-        SudokuData Data = new SudokuData();
+        private SudokuData sudokuData;
+        private BackgroundWorker backgroundSolver;
+        public SudokuForm()
+        {
+            sudokuData = new SudokuData();
+            backgroundSolver = new BackgroundWorker();
+            backgroundSolver.DoWork += new DoWorkEventHandler(SolveInBackground);
+            backgroundSolver.RunWorkerCompleted += new RunWorkerCompletedEventHandler(HandleSolve);
+
+            InitializeComponent();
+            FillTableLayout();
+            DataToGrid();
+        }
 
         public void DataToGrid()
         {
@@ -22,13 +35,13 @@ namespace Sudoku
             {
                 for (int j = 0; j < sudokuTable.RowCount; j++)
                 {
-                    if(Data.NumberMatrix[i, j] == 0)
+                    if(sudokuData.NumberMatrix[i, j] == 0)
                     {
                         sudokuTable.GetControlFromPosition(j, i).Text = "";
                     }
                     else
                     {
-                        sudokuTable.GetControlFromPosition(j, i).Text = Data.NumberMatrix[i, j].ToString();
+                        sudokuTable.GetControlFromPosition(j, i).Text = sudokuData.NumberMatrix[i, j].ToString();
                     }
                 }
             }
@@ -42,37 +55,32 @@ namespace Sudoku
                 {
                     if (sudokuTable.GetControlFromPosition(j, i).Text == "")
                     {
-                        Data.NumberMatrix[i, j] = 0;
+                        sudokuData.NumberMatrix[i, j] = 0;
                     }
                     else
                     {
-                        Data.NumberMatrix[i, j] = Int32.Parse(sudokuTable.GetControlFromPosition(j, i).Text);
+                        sudokuData.NumberMatrix[i, j] = Int32.Parse(sudokuTable.GetControlFromPosition(j, i).Text);
                     }
                 }
             }
         }
 
-        public SudokuForm()
-        {
-            InitializeComponent();
-            FillTableLayout();
-            DataToGrid();
-        }
-
         private void NumFilterKeyPress(object sender, KeyPressEventArgs e)
         {
+            //Filter all except numbers, control chars and '.'
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
                 (e.KeyChar != '.'))
             {
                 e.Handled = true;
             }
 
-            // only one decimal point
+            //Only one decimal point
             if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
             {
                 e.Handled = true;
             }
-
+            
+            //No zeroes
             if ((e.KeyChar == '0'))
             {
                 e.Handled = true;
@@ -92,8 +100,8 @@ namespace Sudoku
                         Font = new System.Drawing.Font("ArialBlack", 20, FontStyle.Bold),
                         AutoSize = false,
                         MaxLength = 1,
-                        ShortcutsEnabled = false
-                        //BackColor = Color.FromArgb(255-8*i, 255-8*j, 255)
+                        ShortcutsEnabled = false,
+                        BackColor = Color.FromArgb(255-8*i, 255-8*j, 255)
                     };
 
                     textBox.KeyPress += NumFilterKeyPress;
@@ -117,7 +125,7 @@ namespace Sudoku
             {
                 try
                 {
-                    Data.LoadFromFile(openFileDialog.FileName);
+                    sudokuData.LoadFromFile(openFileDialog.FileName);
                     DataToGrid();
                 }
                 catch (Exception ex)
@@ -140,7 +148,7 @@ namespace Sudoku
                 try
                 {
                     GridToData();
-                    Data.SaveToFile(saveFileDialog.FileName);
+                    sudokuData.SaveToFile(saveFileDialog.FileName);
                 }
                 catch (Exception ex)
                 {
@@ -153,27 +161,36 @@ namespace Sudoku
         {
             GridToData();
 
-            if (Data.CheckSudokuDataValidity())
+            if (sudokuData.CheckSudokuDataValidity())
             {
-                Solver solver = new Solver();
+                buttonLayout.Enabled = false;
+                backgroundSolver.RunWorkerAsync();
 
-                Data.NumberMatrix = solver.RunSolve(Data.NumberMatrix);
-
-                DataToGrid();
-
-                MessageBox.Show("Solved");
+                //MessageBox.Show("Solved");
             }
             else
             {
-                MessageBox.Show("Invalid input data. Check the table.");
+                MessageBox.Show("Invalid input data. Check the input table.");
             }
+        }
+
+        private void SolveInBackground(object sender, DoWorkEventArgs e)
+        {
+            Solver solver = new Solver();
+            sudokuData.NumberMatrix = solver.RunSolve(sudokuData.NumberMatrix);
+        }
+
+        private void HandleSolve(object sender, RunWorkerCompletedEventArgs e)
+        {
+            DataToGrid();
+            buttonLayout.Enabled = true;
         }
 
         private void BtnValidate_Click(object sender, EventArgs e)
         {
             GridToData();
 
-            if (Data.CheckSudokuDataValidity())
+            if (sudokuData.CheckSudokuDataValidity())
             {
                 MessageBox.Show("Input is valid sudoku");
             }

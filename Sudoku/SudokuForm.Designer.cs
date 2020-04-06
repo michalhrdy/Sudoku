@@ -85,9 +85,10 @@
             // 
             // BtnLoad
             // 
+            this.BtnLoad.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BtnLoad.Location = new System.Drawing.Point(3, 3);
             this.BtnLoad.Name = "BtnLoad";
-            this.BtnLoad.Size = new System.Drawing.Size(75, 23);
+            this.BtnLoad.Size = new System.Drawing.Size(94, 41);
             this.BtnLoad.TabIndex = 0;
             this.BtnLoad.Text = "Load";
             this.BtnLoad.UseVisualStyleBackColor = true;
@@ -95,9 +96,10 @@
             // 
             // BtnSave
             // 
+            this.BtnSave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BtnSave.Location = new System.Drawing.Point(103, 3);
             this.BtnSave.Name = "BtnSave";
-            this.BtnSave.Size = new System.Drawing.Size(75, 23);
+            this.BtnSave.Size = new System.Drawing.Size(94, 41);
             this.BtnSave.TabIndex = 1;
             this.BtnSave.Text = "Save";
             this.BtnSave.UseVisualStyleBackColor = true;
@@ -105,9 +107,10 @@
             // 
             // BtnSolve
             // 
+            this.BtnSolve.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BtnSolve.Location = new System.Drawing.Point(103, 50);
             this.BtnSolve.Name = "BtnSolve";
-            this.BtnSolve.Size = new System.Drawing.Size(75, 23);
+            this.BtnSolve.Size = new System.Drawing.Size(94, 42);
             this.BtnSolve.TabIndex = 2;
             this.BtnSolve.Text = "Solve";
             this.BtnSolve.UseVisualStyleBackColor = true;
@@ -115,9 +118,10 @@
             // 
             // BtnValidate
             // 
+            this.BtnValidate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BtnValidate.Location = new System.Drawing.Point(3, 50);
             this.BtnValidate.Name = "BtnValidate";
-            this.BtnValidate.Size = new System.Drawing.Size(75, 23);
+            this.BtnValidate.Size = new System.Drawing.Size(94, 42);
             this.BtnValidate.TabIndex = 3;
             this.BtnValidate.Text = "Validate";
             this.BtnValidate.UseVisualStyleBackColor = true;
