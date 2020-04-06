@@ -164,6 +164,7 @@ namespace Sudoku
             if (sudokuData.CheckSudokuDataValidity())
             {
                 buttonLayout.Enabled = false;
+                sudokuTable.Enabled = false;
                 backgroundSolver.RunWorkerAsync();
 
                 //MessageBox.Show("Solved");
@@ -184,6 +185,7 @@ namespace Sudoku
         {
             DataToGrid();
             buttonLayout.Enabled = true;
+            sudokuTable.Enabled = true;
         }
 
         private void BtnValidate_Click(object sender, EventArgs e)
