@@ -12,13 +12,12 @@ namespace Sudoku
         private int[,] sudokuMatrixCopy;
         public Solver()
         {
-
         }
 
         //Makes a copy of input data and runs Solve()
         public int[,] RunSolve(int[,] sudokuMatrix)
         {
-            this.sudokuMatrixCopy = sudokuMatrix;
+            sudokuMatrixCopy = sudokuMatrix.Clone() as int[,];
 
             Solve(sudokuMatrixCopy);
 
@@ -31,10 +30,9 @@ namespace Sudoku
             int row = 0;
             int col = 0;
 
-            //If there are no empty fields left copy the result
-            if (!FindEmpty(ref row,ref col,ref sudokuMatrix))
+            //If there are no empty fields left return
+            if (!FindEmpty(ref row, ref col, sudokuMatrix))
             {
-                this.sudokuMatrixCopy = sudokuMatrix;
                 return true;
             }
 
@@ -62,7 +60,7 @@ namespace Sudoku
 
         //Sets row and col to first found empty position in sudokuMatrix
         //Returns false if there are no more epmty cells left
-        private bool FindEmpty(ref int row, ref int col, ref int[,] sudokuMatrix)
+        private bool FindEmpty(ref int row, ref int col, int[,] sudokuMatrix)
         {
             for (int i = 0; i < sudokuMatrix.GetLength(0); i++)
             {
