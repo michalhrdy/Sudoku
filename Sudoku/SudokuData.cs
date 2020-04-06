@@ -12,7 +12,7 @@ namespace Sudoku
         public int[,] NumberMatrix { get; set; }
         public SudokuData()
         {
-            FillMatrix();
+            InitMatrix();
         }
 
         public void LoadFromFile(string fileName)
@@ -135,18 +135,12 @@ namespace Sudoku
             return true;
         }
 
-        private void FillMatrix()
+        //Just for testing purposes
+        private void InitMatrix()
         {
             //NumberMatrix = Settings.defaultData;
-
             NumberMatrix = new int[Settings.matrixSize,Settings.matrixSize];
-            for (int i = 0; i < NumberMatrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < NumberMatrix.GetLength(1); j++)
-                {
-                    NumberMatrix[i, j] = 0;
-                }
-            }
+
         }
     }
 }
