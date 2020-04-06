@@ -59,7 +59,7 @@ namespace Sudoku
             }
 
             //Try to find viable number to fit in an empty cell
-            for (int n = 1; n <= sudokuMatrix.GetLength(0); n++)
+            for (int n = Settings.minValue; n <= sudokuMatrix.GetLength(0); n++)
             {
                 //If number is unique in column, row and submatrix
                 //place it in an empty spot and call Solve recursively
