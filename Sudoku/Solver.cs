@@ -51,7 +51,7 @@ namespace Sudoku
                 }
             }
 
-            //If there are no empty fields left copt the result
+            //If there are no empty fields left copy the result
             if (!foundEmpty)
             {
                 this.sudokuMatrixCopy = sudokuMatrix;
