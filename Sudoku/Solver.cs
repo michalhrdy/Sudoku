@@ -30,29 +30,9 @@ namespace Sudoku
         {
             int row = 0;
             int col = 0;
-            bool foundEmpty = false;
-
-            //Find an empty cell
-            for (int i = 0; i < sudokuMatrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < sudokuMatrix.GetLength(1); j++)
-                {
-                    if (sudokuMatrix[i, j] == 0)
-                    {
-                        row = i;
-                        col = j;
-                        foundEmpty = true;
-                        break;
-                    }
-                }
-                if (foundEmpty)
-                {
-                    break;
-                }
-            }
 
             //If there are no empty fields left copy the result
-            if (!foundEmpty)
+            if (!FindEmpty(ref row,ref col,ref sudokuMatrix))
             {
                 this.sudokuMatrixCopy = sudokuMatrix;
                 return true;
@@ -74,6 +54,25 @@ namespace Sudoku
                     else
                     {
                         sudokuMatrix[row, col] = 0;
+                    }
+                }
+            }
+            return false;
+        }
+
+        //Sets row and col to first found empty position in sudokuMatrix
+        //Returns false if there are no more epmty cells left
+        private bool FindEmpty(ref int row, ref int col, ref int[,] sudokuMatrix)
+        {
+            for (int i = 0; i < sudokuMatrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < sudokuMatrix.GetLength(1); j++)
+                {
+                    if (sudokuMatrix[i, j] == 0)
+                    {
+                        row = i;
+                        col = j;
+                        return true;
                     }
                 }
             }
